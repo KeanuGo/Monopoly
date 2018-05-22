@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.border.Border;
 
 public class MonopolyBoard extends JPanel{
+	static SoundThread sound;
 	final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
@@ -216,6 +217,7 @@ public class MonopolyBoard extends JPanel{
 	}
 	
 	public void moveToken(int tokenIndex, int dest){
+		new SoundThread("sounds/move.wav", false);
 		Point destination = squares[dest].getLocation();
 		//System.out.print("Move:" + tokenIndex + "{from: (" + tokens[tokenIndex].getX() + ", " + tokens[tokenIndex].getY() + ")");
 		//System.out.println(", to: (" + destination.x + ", " + destination.y + ")}");

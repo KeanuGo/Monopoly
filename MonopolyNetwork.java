@@ -24,6 +24,7 @@ i.e Position update{
 			-properties update
 */
 public class MonopolyNetwork implements ActionListener{
+	SoundThread sound;
 	public static final int P_MOVE = 0, P_BALANCE = 1, P_PROPERTIES = 2, P_ASK_TO_SELL = 3, P_CARD_REQUEST = 4, P_YOUR_TURN = 5, P_STATUS = 6, P_LOSE = 7, P_USE_CARD = 8, P_CHANGE_DICE_ICON = 99;//data code
 	public static final int FOREX_UPDATE = 9;
 	public static final int LOBBY_INDEX_UPDATE = 10, LOBBY_START_GAME = 11, LOBBY_FORCE_LEAVE = 12, LOBBY_CHAT_MESSAGE = 13, LOBBY_FOUND_WINNER = 14, LOBBY_FORCE_CLOSE_JDIALOGS = 15;
@@ -223,11 +224,13 @@ public class MonopolyNetwork implements ActionListener{
 										System.out.println("your index updated to " + handler.your_index);
 										Monopoly.lobbyPanel.update();
 									}else if(Integer.parseInt(message[0]) == LOBBY_START_GAME){
+										
 										System.out.println("your index starting game is " + handler.your_index);
 										Monopoly.showGame();
 									}else if(Integer.parseInt(message[0]) == LOBBY_FORCE_LEAVE){
 										Monopoly.showMenu();
 									}else if(Integer.parseInt(message[0]) == LOBBY_CHAT_MESSAGE){
+										new SoundThread("sounds/alert.wav", false);
 										Monopoly.lobbyPanel.lobby_chat.setText(Monopoly.lobbyPanel.lobby_chat.getText()+client_name+":"+message[1]+"\n");
 									}
 								}else if(Monopoly.gameHandler.gamepane_open){
@@ -280,6 +283,7 @@ public class MonopolyNetwork implements ActionListener{
 											//System.out.println("from host: " + "P" + (pNum+1) + "used cc card: "+ card_detail);
 											new Thread(){
 												public void run(){
+													new SoundThread("sounds/popup.wav", false);
 													JOptionPane.showMessageDialog(null, "Player " + (pNum+1) + " used community chest card: " + card_detail);
 												}
 											}.start();
@@ -287,6 +291,7 @@ public class MonopolyNetwork implements ActionListener{
 											//System.out.println("from host: " + "P" + (pNum+1) + "used c card: "+ card_detail);
 											new Thread(){
 												public void run(){
+													new SoundThread("sounds/popup.wav", false);
 													JOptionPane.showMessageDialog(null, "Player " + (pNum+1) + " used chance card: " + card_detail);
 												}
 											}.start();
@@ -407,6 +412,7 @@ public class MonopolyNetwork implements ActionListener{
 				}
 			}
 		}else if(Monopoly.gameHandler.gamepane_open && index == 0 && !is_host){
+			new SoundThread("sounds/popup.wav", false);
 			JOptionPane.showMessageDialog(null, "Host has left the game!");
 			handler.nullify();
 			Monopoly.showMenu();

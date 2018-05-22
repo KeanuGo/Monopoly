@@ -3,6 +3,7 @@ import java.util.Random;
 import javax.swing.*;
 
 public class Cards{
+	SoundThread sound;
 	MonopolyGameHandler handler;
 	String text;
 	int action;
@@ -213,6 +214,8 @@ public class Cards{
 			}
 		}else if(use_number == 15){
 			if(handler.pData[pNum].has_bail_chance){
+				new SoundThread("sounds/popup.wav", false);
+				new SoundThread("sounds/popup.wav", false);
 				int n = JOptionPane.showConfirmDialog(
 					null,
 					"You are going to jail. Would you like to use your free pass?",
@@ -463,6 +466,7 @@ public class Cards{
 			handler.mn.sendToAll(MonopolyNetwork.P_MOVE+";"+pNum+";"+11+";");
 		}else if(use_number == 15){
 			if(handler.pData[pNum].has_bail_chance){
+				new SoundThread("sounds/popup.wav", false);
 				int n = JOptionPane.showConfirmDialog(
 					null,
 					"You are going to jail. Would you like to use your free pass?",

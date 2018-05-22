@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
+	SoundThread sound;
 	Property[] properties = new Property[40];
 	MonopolyBoard board;
 	MonopolyNetwork mn;
@@ -19,11 +20,20 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 	ForexStatusPanel forexStatusPanel;
 	CurrencyExchangePanel currencyExchangePanel;
 	Cards cards;
-	ImageIcon[] dice_icons = {new ImageIcon("ui/Die_0.png"), new ImageIcon("ui/Die_1.png"), new ImageIcon("ui/Die_2.png"), new ImageIcon("ui/Die_3.png"), new ImageIcon("ui/Die_4.png"), new ImageIcon("ui/Die_5.png"), new ImageIcon("ui/Die_6.png")};
+	ImageIcon[] dice_icons = {new ImageIcon(new ImageIcon("ui/Die_0.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),
+							  new ImageIcon(new ImageIcon("ui/Die_1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),
+							  new ImageIcon(new ImageIcon("ui/Die_2.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),
+							  new ImageIcon(new ImageIcon("ui/Die_3.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),
+							  new ImageIcon(new ImageIcon("ui/Die_4.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),
+							  new ImageIcon(new ImageIcon("ui/Die_5.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)),
+							  new ImageIcon(new ImageIcon("ui/Die_6.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))};
 	boolean gamepane_open = false;
 	
 	JLabel current_turn_label = new JLabel("Current Turn: ");
-	JButton roll_dice_button = new JButton("Roll dice");
+	ImageIcon[] roll_dice_button_icons = {new ImageIcon(new ImageIcon("ui/RollDiceButton.png").getImage().getScaledInstance(150, 50, Image.SCALE_DEFAULT)),
+										  new ImageIcon(new ImageIcon("ui/RollDiceButton_hover.png").getImage().getScaledInstance(150, 50, Image.SCALE_DEFAULT)),
+										  new ImageIcon(new ImageIcon("ui/RollDiceButton_mouse_down.png").getImage().getScaledInstance(150, 50, Image.SCALE_DEFAULT))};
+	JButton roll_dice_button = new JButton(roll_dice_button_icons[0]);
 	JLabel[] dice_icon_label = {new JLabel(dice_icons[0]), new JLabel(dice_icons[0])};
 	
 	boolean is_host = false;
@@ -56,6 +66,32 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 		playerStatusPanel.sell_button.addActionListener(this);
 		playerStatusPanel.upgrade_button.addActionListener(this);
 		mn = new MonopolyNetwork(this, is_host);
+		
+		roll_dice_button.setContentAreaFilled(false);
+		roll_dice_button.setOpaque(false);
+		roll_dice_button.setBorderPainted(false);
+		roll_dice_button.addMouseListener(
+			new MouseAdapter(){
+				public void mouseEntered(MouseEvent e){
+					roll_dice_button.setIcon(roll_dice_button_icons[1]);
+					Monopoly.frame.revalidate();
+				}
+				public void mouseExited(MouseEvent e){
+					roll_dice_button.setIcon(roll_dice_button_icons[0]);
+					Monopoly.frame.revalidate();
+				}
+				
+				public void mousePressed(MouseEvent e){
+					roll_dice_button.setIcon(roll_dice_button_icons[2]);
+					Monopoly.frame.revalidate();
+				}
+				
+				public void mouseReleased(MouseEvent e){
+					roll_dice_button.setIcon(roll_dice_button_icons[0]);
+					Monopoly.frame.revalidate();
+				}
+			}
+		);
 	}
 	
 	public void actionPerformed(ActionEvent e){
@@ -73,6 +109,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 				String[] prop = prop1.split(":");
 				int index = Integer.parseInt(prop[0])-1;
 				Property p = pData[your_index].properties.get(index);
+				new SoundThread("sounds/popup.wav", false);
 				int n = JOptionPane.showConfirmDialog(
 					null,
 					"Are you sure you want to sell property for " + (((p.price*(p.level+1))+(p.price*.15f*p.level))/10f) + " " + Forex.currencies[p.currency],
@@ -96,12 +133,15 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 				int index = Integer.parseInt(prop[0])-1;
 				Property p = pData[your_index].properties.get(index);
 				if(!p.upgradeable){
+					new SoundThread("sounds/popup.wav", false);
 					JOptionPane.showMessageDialog(null, "Property is not cannot be upgraded!");
 					return;
 				}else if(!p.monopolized){
+					new SoundThread("sounds/popup.wav", false);
 					JOptionPane.showMessageDialog(null, "Property must be monopolized!");
 					return;
 				}
+				new SoundThread("sounds/popup.wav", false);
 				int n = JOptionPane.showConfirmDialog(
 					null,
 					"Are you sure you want to upgrade property for " + (p.price+(p.price*.15f*(p.level+1))) + " " + Forex.currencies[p.currency],
@@ -114,6 +154,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 						mn.sendToAll(MonopolyNetwork.P_BALANCE+";"+your_index+";"+pData[your_index].balance[p.currency]+";"+p.currency+";");
 						mn.sendToAll(MonopolyNetwork.P_PROPERTIES+";2;"+your_index+";"+index+";");
 					}else{
+						new SoundThread("sounds/popup.wav", false);
 						JOptionPane.showMessageDialog(null, "Insufficient money for upgrade!");
 					}
 				}
@@ -122,6 +163,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 			rolled_dice = true;
 			lose = false;
 			roll_dice_button.setEnabled(false);
+			new SoundThread("sounds/roll_dice.wav", false);
 			int toAdd1 =  1+(new Random().nextInt(6));
 			int toAdd2 =  1+(new Random().nextInt(6));
 			dice_icon_label[0].setIcon(dice_icons[toAdd1]);
@@ -148,6 +190,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 					//System.out.println("Pos: " + pData[your_index].curTileNum);
 					if(properties[pData[your_index].curTileNum].owner == -1 && !lose && properties[pData[your_index].curTileNum].buyable){
 						//System.out.println("1");
+						new SoundThread("sounds/popup.wav", false);
 						int n = JOptionPane.showConfirmDialog(
 							null,
 							"Would you like to buy property for " + properties[pData[your_index].curTileNum].price + " " + Forex.currencies[properties[pData[your_index].curTileNum].currency] + "? Tile no: " + pData[your_index].curTileNum,
@@ -187,6 +230,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 					}else if(!lose && pData[your_index].curTileNum == 30){
 						//System.out.println("3");
 						if(pData[your_index].has_bail_chance){
+							new SoundThread("sounds/popup.wav", false);
 							int n = JOptionPane.showConfirmDialog(
 								null,
 								"You are going to jail. Would you like to use your free pass?",
@@ -348,6 +392,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 					pData[pNum].properties.add(properties[i]);
 					playerStatusPanel.updatePropertiesPanel(pNum);
 				}else{
+					new SoundThread("sounds/popup.wav", false);
 					JOptionPane.showMessageDialog(null, "Cannot buy property!");
 				}
 				break;
@@ -476,6 +521,7 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 		p.add(playerPropertiesListSelector, BorderLayout.CENTER);
 		p.add(amountsold, BorderLayout.SOUTH);
 		
+		new SoundThread("sounds/popup.wav", false);
 		JOptionPane.showMessageDialog(null,p,"Choose property to sell",JOptionPane.INFORMATION_MESSAGE);
 		Object[] values = playerPropertiesListSelector.getSelectedValues();
 		float[] totalPrice = {0f,0f,0f,0f};
@@ -613,18 +659,21 @@ public class MonopolyGameHandler extends MouseAdapter implements ActionListener{
 			mn.sendToAll(MonopolyNetwork.P_USE_CARD+";1;"+pNum+";"+c.text+";");
 			//System.out.println("Player " +(pNum+1) + "used cc card: " + c.text);
 			cards.useCommunityChestCard(c.use_number, pNum);
+			new SoundThread("sounds/popup.wav", false);
 			JOptionPane.showMessageDialog(null, "Player " + (pNum+1) + " used community chest card: " + c.text);
 		}else if(cardType == 2){
 			c = cards.getChanceCard();
 			mn.sendToAll(MonopolyNetwork.P_USE_CARD+";2;"+pNum+";"+c.text+";");
 			//System.out.println("Player " +(pNum+1) + "used c card: " + c.text);
 			cards.useChanceCard(c.use_number, pNum);
+			new SoundThread("sounds/popup.wav", false);
 			JOptionPane.showMessageDialog(null, "Player " + (pNum+1) + " used chance card: " + c.text);
 		}
 		
 	}
 	
 	public void declareWinner(int pNum){
+		new SoundThread("sounds/popup.wav", false);
 		JOptionPane.showMessageDialog(null, "Player " + pData[pNum].name + " won!");
 		System.out.println("Player " + pNum + " won!");
 	}
