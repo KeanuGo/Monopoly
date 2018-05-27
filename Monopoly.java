@@ -50,8 +50,12 @@ public class Monopoly{
 		menuPanel.setLocation(xLoc, yLoc);
 		
 		frame.add(sound_button);
+		sound_button.setBorderPainted(false);
+        sound_button.setContentAreaFilled(false);
+		sound_button.setOpaque(false);
 		sound_button.setSize(sound_button.getPreferredSize());
 		sound_button.setLocation(frame.getWidth()-sound_button.getWidth(), 0);
+		
 		
 		frame.repaint();
 		frame.revalidate();
@@ -78,6 +82,9 @@ public class Monopoly{
 		lobbyPanel.setLocation(xLoc, yLoc);
 		
 		frame.add(sound_button);
+		sound_button.setBorderPainted(false);
+        sound_button.setContentAreaFilled(false);
+		sound_button.setOpaque(false);
 		sound_button.setSize(sound_button.getPreferredSize());
 		sound_button.setLocation(frame.getWidth()-sound_button.getWidth(), 0);
 		
@@ -144,6 +151,9 @@ public class Monopoly{
 		}
 		
 		frame.add(sound_button);
+		sound_button.setBorderPainted(false);
+        sound_button.setContentAreaFilled(false);
+		sound_button.setOpaque(false);
 		sound_button.setSize(sound_button.getPreferredSize());
 		sound_button.setLocation(frame.getWidth()-sound_button.getWidth(), 0);
 		
