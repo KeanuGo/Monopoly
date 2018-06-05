@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PlayerData{
 	String name = "";
 	String status = "";
-	float balance[] = {332f, 0f, 0f, 0f};
+	float balance[] = {1000f, 0f, 0f, 0f};
 	int curTileNum = 0;
 	BufferedImage icon;
 	JLabel token = null;
