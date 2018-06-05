@@ -59,7 +59,7 @@ public class ForexStatusPanel extends JPanel{
 		super();
 		this.is_host = is_host;
 		this.handler = handler;
-		this.setBorder(new LineBorder(Color.GRAY));
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		this.setLayout(new BorderLayout());
 		forex = new Forex(is_host, this);
 		tablePanel.setLayout(new GridLayout(5,1));
