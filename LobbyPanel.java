@@ -86,18 +86,18 @@ public class LobbyPanel extends JPanel{
 			host_port.setText("Host port: " + Monopoly.gameHandler.mn.serverPort);
 			playIPLabel[0].setText(Monopoly.gameHandler.mn.name + "(you)");
 			for(int i = 0; i < Monopoly.gameHandler.mn.clientsNum; i++){
-				playIPLabel[i+1].setText(Monopoly.gameHandler.mn.clients[i].client_name + "(" + Monopoly.gameHandler.mn.clients[i].clientSocket.getLocalAddress().toString() + ")");
+				playIPLabel[i+1].setText(Monopoly.gameHandler.mn.clients[i].client_name + "(" + Monopoly.gameHandler.mn.clients[i].clientSocket.getRemoteSocketAddress().toString() + ")");
 			}
 		}else{
-			host_IP.setText("Host IP: " + Monopoly.gameHandler.mn.clients[0].clientSocket.getLocalAddress().toString().substring(1));
+			host_IP.setText("Host IP: " + Monopoly.gameHandler.mn.clients[0].clientSocket.getRemoteSocketAddress().toString().substring(1));
 			host_port.setText("Host port: " + Monopoly.gameHandler.mn.clients[0].clientSocket.getPort());
 			playIPLabel[0].setText(Monopoly.gameHandler.mn.clients[0].client_name + "(host)");
 			for(int i = 0; i < Monopoly.gameHandler.your_index; i++){
-				playIPLabel[i+1].setText(Monopoly.gameHandler.mn.clients[i].client_name + ", " + Monopoly.gameHandler.mn.clients[i].clientSocket.getLocalAddress().toString());
+				playIPLabel[i+1].setText(Monopoly.gameHandler.mn.clients[i].client_name + ", " + Monopoly.gameHandler.mn.clients[i].clientSocket.getRemoteSocketAddress().toString());
 			}
 			playIPLabel[Monopoly.gameHandler.your_index].setText(Monopoly.gameHandler.mn.name + "(you)");
 			for(int i = Monopoly.gameHandler.your_index; i < Monopoly.gameHandler.mn.clientsNum; i++){
-				playIPLabel[i+1].setText(Monopoly.gameHandler.mn.clients[i].client_name + ", " + Monopoly.gameHandler.mn.clients[i].clientSocket.getLocalAddress().toString());
+				playIPLabel[i+1].setText(Monopoly.gameHandler.mn.clients[i].client_name + ", " + Monopoly.gameHandler.mn.clients[i].clientSocket.getRemoteSocketAddress().toString());
 			}
 		}
 		for(int i = Monopoly.gameHandler.mn.clientsNum; i < 7; i++){
