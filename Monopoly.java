@@ -108,6 +108,7 @@ public class Monopoly{
 		frame.getContentPane().removeAll();
 		
 		frame.add(gameHandler.board);
+		gameHandler.board.setSize(800, 743);
 		frame.add(gameHandler.playerStatusPanel);
 		frame.add(gameHandler.forexStatusPanel);
 		frame.add(gameHandler.currencyExchangePanel);
@@ -135,11 +136,11 @@ public class Monopoly{
 		frame.add(gameHandler.dice_icon_label[1]);
 		gameHandler.dice_icon_label[0].setSize(gameHandler.dice_icon_label[0].getPreferredSize());
 		gameHandler.dice_icon_label[1].setSize(gameHandler.dice_icon_label[1].getPreferredSize());
-		gameHandler.dice_icon_label[0].setLocation(gameHandler.board.getWidth()+ gameHandler.forexStatusPanel.getWidth()+40, gameHandler.current_turn_label.getHeight()+25);
-		gameHandler.dice_icon_label[1].setLocation(gameHandler.board.getWidth() + gameHandler.forexStatusPanel.getWidth() + gameHandler.dice_icon_label[0].getWidth() + 55, gameHandler.current_turn_label.getHeight()+25);
+		gameHandler.dice_icon_label[0].setLocation(gameHandler.board.getWidth()+ gameHandler.forexStatusPanel.getWidth()+15, gameHandler.current_turn_label.getHeight()+15);
+		gameHandler.dice_icon_label[1].setLocation(gameHandler.board.getWidth() + gameHandler.forexStatusPanel.getWidth() + gameHandler.dice_icon_label[0].getWidth() + 25, gameHandler.current_turn_label.getHeight()+15);
 		
-		gameHandler.playerStatusPanel.setLocation(gameHandler.board.getWidth()+5, gameHandler.forexStatusPanel.getHeight() + gameHandler.currencyExchangePanel.getHeight() + 10);
-		gameHandler.playerStatusPanel.setSize(650, 515);
+		gameHandler.playerStatusPanel.setLocation(gameHandler.board.getWidth(), gameHandler.forexStatusPanel.getHeight() + gameHandler.currencyExchangePanel.getHeight() + 50);
+		gameHandler.playerStatusPanel.setSize(565, 515);
 		//gameHandler.asdf.setSize(gameHandler.asdf.getPreferredSize());
 		//gameHandler.asdf.setLocation(gameHandler.board.getWidth()+105, gameHandler.playerStatusPanel.getHeight()+ gameHandler.currencyExchangePanel.getHeight() + 30);
 		//System.out.println(gameHandler.playerStatusPanel.getX());
