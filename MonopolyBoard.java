@@ -116,31 +116,31 @@ public class MonopolyBoard extends JPanel{
 							"images/luxury_tax.jpg",
 							"images/ginza.jpg"
 							};
-		int w= 89, h = 89;
+		int w= 133, h = 105;
 		for(int i=0; i<10; i++){
 			squares[i]= new JLabel(new ImageIcon(new ImageIcon(imgLabel[i]).getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT)));
 			squares[i].setToolTipText(toolTip[i]);
 			w=56;
 		}
-		w= 89; h=89;
+		w= 133; h=105;
 		for(int i=10; i<20; i++){
 			squares[i]= new JLabel(new ImageIcon(new ImageIcon(imgLabel[i]).getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT)));
 			squares[i].setToolTipText(toolTip[i]);
 			h=56;
 		}
-		w= 89; h=89;
+		w= 133; h=105;
 		for(int i=20; i<30; i++){
 			squares[i]= new JLabel(new ImageIcon(new ImageIcon(imgLabel[i]).getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT)));
 			squares[i].setToolTipText(toolTip[i]);
 			w=56;
 		}
-		w= 89; h=89;
+		w= 133; h=105;
 		for(int i=30; i<40; i++){
 			squares[i]= new JLabel(new ImageIcon(new ImageIcon(imgLabel[i]).getImage().getScaledInstance(w, h, Image.SCALE_DEFAULT)));
 			squares[i].setToolTipText(toolTip[i]);
 			h=56;
 		}
-		Border border = BorderFactory.createLineBorder(Color.GRAY, 1);
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
 		for(int i=0; i<40; i++){
 			squares[i].setBorder(border);
 		}
@@ -175,6 +175,7 @@ public class MonopolyBoard extends JPanel{
 		}
 		
 		JLabel logo= new JLabel(new ImageIcon(new ImageIcon("images/monopoly_logo.png").getImage().getScaledInstance(250, 100, Image.SCALE_DEFAULT)));
+		logo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
 		c.fill = GridBagConstraints.BOTH;//make this component tall
 		c.weightx = 0.0;
 		c.gridwidth = 9;
@@ -208,6 +209,8 @@ public class MonopolyBoard extends JPanel{
 		glassPanel.setLocation(0,0);
 		glassPanel.setOpaque(false);
 		this.setSize(board.getPreferredSize());
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+		board.setBackground(new Color(170,224,250));
 	}
 	
 	public void refresh(){
