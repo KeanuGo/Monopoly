@@ -17,9 +17,9 @@ public class PlayerStatusPanel extends JPanel{
 	
 	public PlayerStatusPanel(PlayerData[] data, int numOfPlayers, MonopolyGameHandler handler){
 		super();
-		this.setBackground(new Color(205,230,208));
+		this.setBackground(Color.GREEN);
 		this.handler = handler;
-		this.setBorder(new LineBorder(Color.GRAY));
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 		this.setLayout(new GridLayout(4, 2));
 		for(int i = 0; i < numOfPlayers; i++){
 			playerPanel[i] = new JPanel();
@@ -74,7 +74,7 @@ public class PlayerStatusPanel extends JPanel{
 			
 			TitledBorder border = new TitledBorder(data[i].name);
 			if(handler.your_index == i){
-				border.setBorder(new LineBorder(Color.BLUE));
+				border.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			}else{
 				border.setBorder(new LineBorder(Color.GRAY));
 			}
@@ -89,7 +89,7 @@ public class PlayerStatusPanel extends JPanel{
 			TitledBorder border = new TitledBorder("P" + (i+1) + ":" + handler.pData[i].name);
 			border.setTitleFont(new Font("@Kozuka Gothic Pr6N H", Font.PLAIN, 15));
 			if(handler.your_index == i){
-				border.setBorder(new LineBorder(Color.BLUE));
+				border.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 			}else{
 				border.setBorder(new LineBorder(Color.GRAY));
 			}
