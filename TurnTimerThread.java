@@ -7,7 +7,7 @@ public class TurnTimerThread implements ActionListener{
 	Timer timer = new Timer(1000, this);
 	
 	int time = 0;
-	int max_time = 5;
+	int max_time = 20;
 	boolean ask_to_sell_replied = false;
 	public TurnTimerThread(MonopolyGameHandler handler){
 		this.handler = handler;
